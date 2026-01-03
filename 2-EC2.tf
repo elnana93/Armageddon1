@@ -1,5 +1,5 @@
 resource "aws_instance" "lab-ec2-app" {
-  ami           = "ami-0ebf411a80b6b22cb"
+  ami           = data.aws_ami.al2023.id
   instance_type = "t3.micro"
   key_name      = "key2026"
 
@@ -19,4 +19,14 @@ resource "aws_instance" "lab-ec2-app" {
     systemctl enable --now httpd
     echo "EC2 is up" > /var/www/html/index.html
   EOF
+}
+
+data "aws_ami" "al2023" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-x86_64"]
+  }
 }
