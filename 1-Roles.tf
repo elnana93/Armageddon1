@@ -1,6 +1,6 @@
 
 
-# 1) IAM Role (EC2 can assume it)
+
 resource "aws_iam_role" "lab_ec2_role" {
   name = "lab-ec2-secrets-role"
 
@@ -14,8 +14,7 @@ resource "aws_iam_role" "lab_ec2_role" {
   })
 }
 
-# 2) (Simple) Permissions for now: allow reading secrets
-# Later you can lock Resource down to only lab/rds/mysql ARN.
+
 resource "aws_iam_role_policy" "lab_ec2_secrets_policy" {
   name = "lab-ec2-secrets-inline"
   role = aws_iam_role.lab_ec2_role.id
@@ -34,7 +33,7 @@ resource "aws_iam_role_policy" "lab_ec2_secrets_policy" {
 }
 
 
-# 3) Instance Profile (this is what EC2 attaches)
+
 resource "aws_iam_instance_profile" "lab_ec2_profile" {
   name = "lab-ec2-secrets-profile" 
   role = aws_iam_role.lab_ec2_role.name
